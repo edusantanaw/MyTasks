@@ -46,6 +46,10 @@ export const Container = styled.div`
       input {
         width: 100%;
         display: block;
+        &:focus{
+          outline: none;
+          border-color: #fff;
+        }
       }
 
       ::-webkit-scrollbar {
@@ -61,12 +65,26 @@ export const Container = styled.div`
         border-radius: 1em;
       }
     }
-
     button {
+      width: 100%;
       height: 2.7em;
       border: none;
-      border-radius: 15px;
+      margin-bottom: 1.3em;
+      font-size: 1.02em;
+      font-weight: 500;
+      color: #fff;
+      background-color: transparent;
+      border: 1px solid #fff;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+      &:hover{
+        background-color: #fff;
+        color:  #111827;
+      }
     }
+
+   
     select{
         margin-bottom: 1em;
     }

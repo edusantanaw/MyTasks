@@ -1,106 +1,110 @@
 import { Container } from "./styles";
 import { useEffect, useState } from "react";
-import {CreateTask} from "../Components/createTasks/CreateTask";
+import { CreateTask } from "../Components/createTasks/CreateTask";
+import { generate } from "shortid";
+import {Edit} from '../Components/editTask/Edit';
+import List from '../Components/listTasks/List'
 
 interface Task {
-    title: string,
-    description: string,
-    totalSubtasks: number,
-    subtasks: any,
-    status: 'todo'| 'doing' | 'done'
+  id: string;
+  title: string;
+  description: string;
+  totalSubtasks: number;
+  subtasks: subtask[];
+  completedTasks: number;
+  status: string;
 }
 
-export default function Main(){
+interface subtask {
+  id: string;
+  content: string;
+  finished: number;
+  status: "todo" | "done";
+}
 
-    const [tasks, setTask] = useState<object[]>([{
-        title: "",
-        description: "",
-        totalSubtasks: 0,
-        subtasks: "",
-        status: 'todo'
-    }])
-    const [show, setShow] = useState<Boolean>(false)
-    const [todo,setTodo] = useState<Task[]>([])
-    const [doing,setDoing] = useState<Task[]>([])
-    const [done, setDone] = useState<Task[]>([])
-    
-    useEffect(()=>{
-        
-        const task = localStorage.getItem('@App:tasks')
-        if(task){ 
-            const taskParse = JSON.parse(task)
-            const Todo = taskParse.filter((task: Task)=> task.status === 'todo')
-            const Doing = taskParse.filter((task: Task)=> task.status === 'doing')
-            const Done = taskParse.filter((task: Task) => task.status === 'done') 
+export default function Main() {
+  const [tasks, setTask] = useState<Array<Task>>([]);
+  const [show, setShow] = useState<Boolean>(false);
+  const [edit, setEdit] = useState<Boolean>(false)
+  const [todo, setTodo] = useState<Task[]>([]);
+  const [doing, setDoing] = useState<Task[]>([]);
+  const [done, setDone] = useState<Task[]>([]);
+  const [taskId, setTaskId] = useState<Task[]>([])
 
-            setTodo(Todo)
-            setDoing(Doing)
-            setDone(Done)
-            setTask(taskParse)
-        }
+  const task = localStorage.getItem("@App:tasks");
+  useEffect(() => {
+    if (task) {
+      const taskParse = JSON.parse(task);
+      const Todo = taskParse.filter((task: Task) => task.status === "todo");
+      const Doing = taskParse.filter((task: Task) => task.status === "doing");
+      const Done = taskParse.filter((task: Task) => task.status === "done");
 
-    }, [])
-
-
-    const addNewTask  = (title: string, description: string, substasks: string[], status:string,  totalSubtasks: number )   =>{
-        const newTask = {
-            title: title,
-            description: description,
-            substasks: substasks,
-            totalSubtasks:  substasks.length,
-            status: 'todo'
-        }
-        
-        setTask(  [...tasks, newTask] )
-        const allTasks = JSON.stringify(tasks)
-        localStorage.setItem('@App:tasks', allTasks)
-        setShow(false)
+      setTodo(Todo);
+      setDoing(Doing);
+      setDone(Done);
+      setTask(taskParse);
     }
-    return(
-       <>
-        <Container>
-       {show && <CreateTask handleCreate = {addNewTask} />}
-            <div className="header">
-               <h1>Plataform lauch</h1>    
-               <button onClick={()=> show ? setShow(false) : setShow(true)}>+ Add New Task</button>         
-            </div>
-            <div className="tasks">
-                <div className="todo">
-                    <div className="top">
-                        <div />
-                        <h2>Todo ({todo.length})</h2>
-                    </div>
-                    {todo.length > 0 ? todo.map((task: Task, i: number)=>(
-                        <div key={i}  className = "task">
-                            <h3>{task.title}</h3>
-                            <span>{task.subtasks?.finished} of {task.totalSubtasks} subtasks</span>
-                        </div>
-                    )): <span>You don't have any task to do</span>}
-                </div>
-                <div className="doing">
-                <div className="top">
-                        <div />
-                        <h2>Doing ({doing.length})</h2>
-                    </div>
-                {doing.length > 0 ? doing.map((task: Task, i: number)=>(
-                        <div key={i} className = "task">
-                            <h3>{task.title}</h3>
-                        </div>
-                    )): <span>You didn't have start any tasks </span>  }
-                </div>
-                <div className="done">
-                <div className="top">
-                        <div />
-                        <h2>Done ({done.length})</h2>
-                    </div>
-                {done.length > 0 ? done.map((task: Task, i: number)=>(
-                        <div key={i}  className = "task">
-                            <h3>{task.title}</h3>
-                        </div>
-                    )): <span>You don't have complete tasks </span>}
-                </div>
-            </div>
-        </Container>
-       </>
-    )
+  }, [task]);
+
+  const addNewTask = (
+    title: string,
+    description: string,
+    subtasks: subtask[],
+    totalSubtasks: number
+  ) => {
+    const newTask = {
+      id: generate(),
+      title: title,
+      description: description,
+      totalSubtasks: totalSubtasks,
+      subtasks: subtasks,
+      completedTasks: 0,
+      status: "todo",
+    };
+
+    const teste = [...tasks, newTask];
+    setShow(false);
+    const allTasks = JSON.stringify(teste);
+    localStorage.setItem("@App:tasks", allTasks);
+  };
+
+  const showTaskDetails = (id: string) => {
+    const task = tasks.filter((task: Task) => task.id === id);
+    setTaskId(task)
+    setEdit(true)
+  };
+
+  const handleEdit = (task: Task) =>{
+    console.log(task)
+    const updated = tasks.map((t)=> {
+      if(t.id === task.id) {
+        t= task
+      }
+      return t
+    })
+    setTask(updated)
+    const allTasks = JSON.stringify(updated)
+    localStorage.setItem("@App:tasks", allTasks)
+    setEdit(false)
+  }
+
+  return (
+    <>
+      <Container>
+        {edit && <Edit task = {taskId} handleEdit = {handleEdit}/>}
+        {show && <CreateTask handleCreate={addNewTask} />}
+        <div className="header">
+          <h1>Plataform lauch</h1>
+          <button onClick={() => (show ? setShow(false) : setShow(true))}>
+            + Add New Task
+          </button>
+        </div>
+        <div className="tasks">
+          <List list = {todo} showTaskDetails= {showTaskDetails} name="Todo" />
+          <List list = {doing} showTaskDetails= {showTaskDetails} name="Doing"   />
+          <List list = {done} showTaskDetails= {showTaskDetails} name="Done"   />
+        </div>
+      </Container>
+    </>
+  );
 }
