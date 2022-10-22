@@ -13,8 +13,10 @@ export const Container = styled.main`
     background-color: #111820;
     box-shadow: 0px 2px 1px rgba(0, 0, 0, 0.1);
     h1 {
-      font-weight: 500;
+      font-weight: bold;
       font-size: 2em;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
     }
 
     button {
@@ -47,14 +49,7 @@ export const Container = styled.main`
       display: flex;
       align-items: center;
       justify-content: center;
-      div {
-        background-color: blue;
-        width: 1.1em;
-        height: 1.1em;
-        border-radius: 50%;
-        display: inline;
-        margin-right: 0.5em;
-      }
+     
     }
   }
   .task {
@@ -73,6 +68,9 @@ export const Container = styled.main`
     h3 {
       font-size: 1.3em;
     }
+    span{
+      margin: 0;
+    }
   }
 
   .list {
@@ -88,4 +86,38 @@ export const Container = styled.main`
     font-weight: 300;
     margin-left: 1.7em;
   }
+
+  @media (max-width: 870px) {
+    .header{
+      padding: 1em 3em;
+      h1{
+        font-size: 1.8em;
+        font-weight: bold;
+      }   
+      button{
+      width: 10em;
+    }
+  }
+    .tasks{
+      padding: 2em 2em;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .list {
+      width: 100%;
+    }
+  }
 `;
+
+
+export const Status = styled.div`
+
+        background-color: ${props => props.color || 'blue'};
+        width: 1.1em;
+        height: 1.1em;
+        border-radius: 50%;
+        display: inline;
+        margin-right: 0.5em;
+      
+`

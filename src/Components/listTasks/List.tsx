@@ -1,3 +1,5 @@
+import {Status} from '../../pages/styles'
+ 
 interface Task {
     id: string;
     title: string;
@@ -16,11 +18,12 @@ interface Task {
   }
   
 
-export default function List({list, showTaskDetails, name}: any){
-    return(
+export default function List({list, showTaskDetails, name, color}: any){
+console.log(color)
+  return(
         <div className="list">
         <div className="top">
-          <div />
+          <Status color = {color} />
           <h2>{name} ({list.length})</h2>
         </div>
         {list.length > 0 ? (

@@ -94,15 +94,15 @@ export default function Main() {
         {edit && <Edit task = {taskId} handleEdit = {handleEdit}/>}
         {show && <CreateTask handleCreate={addNewTask} />}
         <div className="header">
-          <h1>Plataform lauch</h1>
+          <h1>My Tasks</h1>
           <button onClick={() => (show ? setShow(false) : setShow(true))}>
             + Add New Task
           </button>
         </div>
         <div className="tasks">
-          <List list = {todo} showTaskDetails= {showTaskDetails} name="Todo" />
-          <List list = {doing} showTaskDetails= {showTaskDetails} name="Doing"   />
-          <List list = {done} showTaskDetails= {showTaskDetails} name="Done"   />
+          <List list = {todo} showTaskDetails= {showTaskDetails} name="Todo" color = 'red' />
+          <List list = {doing} showTaskDetails= {showTaskDetails} name="Doing"  color = 'blue'  />
+          <List list = {done} showTaskDetails= {showTaskDetails} name="Done"   color= 'green' />
         </div>
       </Container>
     </>
