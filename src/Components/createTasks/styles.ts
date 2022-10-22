@@ -22,17 +22,17 @@ export const Container = styled.div`
 
     label {
       font-size: 1em;
-      font-weight: 300;
+      font-weight: 500;
       color: #fff;
-      padding-bottom: 3px;
+      padding-bottom: 5px;
     }
     input,
     textarea {
       background-color: transparent;
-      border: 1px solid #94a3b8;
+      border: 1px solid #fff;
       margin-bottom: 1.5em;
-      height: 2.5em;
-      border-radius: 4px;
+      height: 2.6em;
+      border-radius: 5px;
       padding: 10px;
       color: #fff;
     }
@@ -88,6 +88,14 @@ export const Container = styled.div`
     select{
         margin-bottom: 1em;
     }
+    #error{
+      margin: 0;
+      color: red;
+      text-align: center;
+    }
+}
+.inputErro{
+  border-color: red;
 }
   
 `;
