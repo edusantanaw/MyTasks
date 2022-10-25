@@ -5,7 +5,7 @@ export const Container = styled.main`
   min-height: 100vh;
   background-color: #0f172a;
   .header {
-    padding: 1.5em 5em;
+    padding: 1.2em 5em;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -14,14 +14,14 @@ export const Container = styled.main`
     box-shadow: 0px 2px 1px rgba(0, 0, 0, 0.1);
     h1 {
       font-weight: bold;
-      font-size: 2em;
+      font-size: 1.8em;
       text-transform: uppercase;
       letter-spacing: 0.2em;
     }
 
     button {
       width: 13em;
-      height: 3em;
+      height: 2.8em;
       border: none;
       border-radius: 20px;
       cursor: pointer;
